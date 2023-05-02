@@ -39,3 +39,4 @@ lerna-debug.log*
 /.yarn
 /.vscode
 .env
+/static/products
