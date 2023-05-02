@@ -8,6 +8,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { validate as uuidValidate } from 'uuid';
 import { ProductImage } from './entities';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
@@ -21,13 +22,14 @@ export class ProductsService {
     private readonly dataSource: DataSource,
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
+  async create(user: User, createProductDto: CreateProductDto) {
     try {
       // Separem les imatges de la resta de dades, per poder crear les entitats ProductImage
       const { images = [], ...productData } = createProductDto;
       // Creem l'entitat Product amb les dades rebudes i les imatges com a ProductImage
       const product = this.productsRepository.create({
         ...productData,
+        owner: user,
         // TypeORM infereix el producte al qual pertanyen les imatges
         images: images.map((url) =>
           this.productImagesRepository.create({ url }),
