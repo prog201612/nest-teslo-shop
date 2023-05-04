@@ -18,6 +18,9 @@ async function bootstrap() {
     }),
   );
 
+  // CORS
+  app.enableCors();
+
   // Documentació: swagger
   const config = new DocumentBuilder()
     .setTitle('Teslo Shop')
